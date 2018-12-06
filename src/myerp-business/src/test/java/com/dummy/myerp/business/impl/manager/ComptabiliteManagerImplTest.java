@@ -71,4 +71,39 @@ public class ComptabiliteManagerImplTest {
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
+    @Test
+    public void getListCompteComptable() {
+    }
+
+    @Test
+    public void getListJournalComptable() {
+    }
+
+    @Test
+    public void getListEcritureComptable() {
+    }
+
+    @Test
+    public void addReference() {
+    }
+
+    @Test
+    public void checkEcritureComptable() {
+    }
+
+    @Test
+    public void checkEcritureComptableContext() {
+    }
+
+    @Test
+    public void insertEcritureComptable() {
+    }
+
+    @Test
+    public void updateEcritureComptable() {
+    }
+
+    @Test
+    public void deleteEcritureComptable() {
+    }
 }

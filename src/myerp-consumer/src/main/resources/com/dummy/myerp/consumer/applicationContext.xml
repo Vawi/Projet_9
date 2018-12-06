@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
 
     <!-- ====================   Consumer   ==================== -->
@@ -46,6 +46,7 @@
     <bean id="dataSourceMYERP" class="com.dummy.myerp.technical.util.spring.NullFactoryBean">
         <constructor-arg value="javax.sql.DataSource"/>
     </bean>
+
 
 
     <!-- ========== SQL ========== -->

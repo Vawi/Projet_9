@@ -14,16 +14,15 @@ public class EcritureComptableTest {
         BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit);
         String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO)
                                      .subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO)).toPlainString();
-        LigneEcritureComptable vRetour = new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
+        return new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
                                                                     vLibelle,
                                                                     vDebit, vCredit);
-        return vRetour;
     }
 
     @Test
     public void isEquilibree() {
-        EcritureComptable vEcriture;
-        vEcriture = new EcritureComptable();
+
+        EcritureComptable vEcriture = new EcritureComptable();
 
         vEcriture.setLibelle("Equilibrée");
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
@@ -41,4 +40,7 @@ public class EcritureComptableTest {
         Assert.assertFalse(vEcriture.toString(), vEcriture.isEquilibree());
     }
 
+    @Test
+    public void getTotalDebit() {
+    }
 }
