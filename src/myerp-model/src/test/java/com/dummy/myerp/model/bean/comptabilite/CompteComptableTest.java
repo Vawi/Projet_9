@@ -10,6 +10,7 @@ public class CompteComptableTest {
         CompteComptable vCompte = new CompteComptable();
         vCompte.setLibelle("libelle");
         vCompte.setNumero(123);
+        
 
         Assert.assertEquals(vCompte.toString(),
                 "CompteComptable" +
