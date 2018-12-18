@@ -43,4 +43,9 @@ public class EcritureComptableTest {
     @Test
     public void getTotalDebit() {
     }
+
+    @Test
+    public void getTotalCredit() {
+
+    }
 }
