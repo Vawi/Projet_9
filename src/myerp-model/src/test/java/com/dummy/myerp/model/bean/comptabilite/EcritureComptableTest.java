@@ -44,6 +44,13 @@ public class EcritureComptableTest {
 
     @Test
     public void getTotalDebit() {
+        BigDecimal vRetour = BigDecimal.ZERO;
+        for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
+            if (vLigneEcritureComptable.getDebit() != null) {
+                vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
+            }
+        }
+        return vRetour;
     }
 
     @Test

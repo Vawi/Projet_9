@@ -1,5 +1,10 @@
 # MyERP
 
+## Build
+
+[![Build Status](https://travis-ci.org/Vawi/Projet_9.svg?branch=master)](https://travis-ci.org/Vawi/Projet_9)
+
+
 ## Organisation du répertoire
 
 *   `doc` : documentation
