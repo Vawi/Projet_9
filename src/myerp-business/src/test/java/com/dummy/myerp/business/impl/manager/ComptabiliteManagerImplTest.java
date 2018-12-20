@@ -88,6 +88,8 @@ public class ComptabiliteManagerImplTest {
 
     @Test
     public void getListEcritureComptable() {
+        List<EcritureComptable> vList = manager.getListEcritureComptable();
+        Assert.assertTrue(vList.size()>1);
     }
 
     @Test

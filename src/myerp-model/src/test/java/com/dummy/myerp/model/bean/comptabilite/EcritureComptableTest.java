@@ -45,9 +45,9 @@ public class EcritureComptableTest {
 
         EcritureComptable vEcriture = new EcritureComptable();
 
-        vEcriture.getListLigneEcriture().add(this.createLigne(1, "75", "10"));
-        vEcriture.getListLigneEcriture().add(this.createLigne(1, "80", "33"));
-        vEcriture.getListLigneEcriture().add(this.createLigne(2, "10", "301"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200", null));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100", "33"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
 
         BigDecimal vRetour = BigDecimal.ZERO;
@@ -67,9 +67,9 @@ public class EcritureComptableTest {
 
         EcritureComptable vEcriture = new EcritureComptable();
 
-        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200", "400"));
-        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100", "30"));
-        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "30"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", "400"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "30"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "31"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "70"));
 
         BigDecimal vRetour = BigDecimal.ZERO;
