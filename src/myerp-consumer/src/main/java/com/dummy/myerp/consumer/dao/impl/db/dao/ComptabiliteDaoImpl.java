@@ -69,6 +69,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     public void setSQLgetListJournalComptable(String pSQLgetListJournalComptable) {
         SQLgetListJournalComptable = pSQLgetListJournalComptable;
     }
+
     @Override
     public List<JournalComptable> getListJournalComptable() {
         JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
@@ -98,6 +99,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     public void setSQLgetEcritureComptable(String pSQLgetEcritureComptable) {
         SQLgetEcritureComptable = pSQLgetEcritureComptable;
     }
+
     @Override
     public EcritureComptable getEcritureComptable(Integer pId) throws NotFoundException {
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
@@ -119,6 +121,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     public void setSQLgetEcritureComptableByRef(String pSQLgetEcritureComptableByRef) {
         SQLgetEcritureComptableByRef = pSQLgetEcritureComptableByRef;
     }
+
     @Override
     public EcritureComptable getEcritureComptableByRef(String pReference) throws NotFoundException {
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
@@ -140,6 +143,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     public void setSQLloadListLigneEcriture(String pSQLloadListLigneEcriture) {
         SQLloadListLigneEcriture = pSQLloadListLigneEcriture;
     }
+
     @Override
     public void loadListLigneEcriture(EcritureComptable pEcritureComptable) {
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));

@@ -11,7 +11,7 @@
     </bean>
 
 
-    <bean id="dataSourceP9"
+    <bean id="dataSourceMYERP"
           class="org.apache.commons.dbcp2.BasicDataSourceFactory"
           factory-method="createDataSource"
           destroy-method="close">

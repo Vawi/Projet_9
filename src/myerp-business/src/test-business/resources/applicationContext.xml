@@ -9,7 +9,7 @@
     <import resource="classpath:/com/dummy/myerp/business/applicationContext.xml"/>
 
     <bean id="txManagerP9" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSourceP9"/>
+        <property name="dataSource" ref="dataSourceMYERP"/>
     </bean>
 
     <bean id="dataSourceP9Configuration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -17,7 +17,7 @@
     </bean>
 
 
-    <bean id="dataSourceP9"
+    <bean id="dataSourceMYERP"
           class="org.apache.commons.dbcp2.BasicDataSourceFactory"
           factory-method="createDataSource"
           destroy-method="close">
