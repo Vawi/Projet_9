@@ -5,7 +5,10 @@
        xmlns:jee="http://www.springframework.org/schema/jee"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-    <bean id="txManagerP7" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+
+    <import resource="classpath:/com/dummy/myerp/business/applicationContext.xml"/>
+
+    <bean id="txManagerP9" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSourceP9"/>
     </bean>
 

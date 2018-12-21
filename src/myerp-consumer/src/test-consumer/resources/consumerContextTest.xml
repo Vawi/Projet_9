@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
+    <import resource="classpath:/com/dummy/myerp/consumer/applicationContext.xml"/>
+
     <bean id="dataSourceP9Configuration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location" value="classpath:db-p9Test.properties"/>
     </bean>
@@ -16,6 +18,5 @@
         <constructor-arg ref="dataSourceP9Configuration"/>
 
     </bean>
-
 
 </beans>
