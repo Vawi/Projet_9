@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.dummy.myerp.business.contrat.BusinessProxy;
+import com.dummy.myerp.testbusiness.business.BusinessTestCase;
 import org.junit.Assert;
 import org.junit.Test;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
@@ -15,10 +17,9 @@ import com.dummy.myerp.technical.exception.FunctionalException;
 import static com.dummy.myerp.consumer.ConsumerHelper.getDaoProxy;
 
 
-public class ComptabiliteManagerImplTest {
+public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
     private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
-
 
     @Test
     public void checkEcritureComptableUnit() throws Exception {
@@ -79,17 +80,18 @@ public class ComptabiliteManagerImplTest {
     public void getListCompteComptable() {
         List<CompteComptable> pList = getDaoProxy().getComptabiliteDao().getListCompteComptable();
         Assert.assertNotNull(pList);
-        System.out.println(pList);
     }
 
     @Test
     public void getListJournalComptable() {
+        List<CompteComptable> pList = getDaoProxy().getComptabiliteDao().getListCompteComptable();
+        Assert.assertTrue(pList.size() >= 1);
     }
 
     @Test
     public void getListEcritureComptable() {
-        List<EcritureComptable> vList = manager.getListEcritureComptable();
-        Assert.assertTrue(vList.size()>1);
+        List<EcritureComptable> pList = getDaoProxy().getComptabiliteDao().getListEcritureComptable();
+        Assert.assertTrue(pList.size()>1);
     }
 
     @Test

@@ -36,8 +36,8 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     }
 
     @Test
-    public void getEcritureComptable() throws NotFoundException { //Bug a corriger
-        EcritureComptable ec = dao.getEcritureComptable(2);
+    public void getEcritureComptable() throws NotFoundException { // Id négatif a corriger ?
+        EcritureComptable ec = dao.getEcritureComptable(-2);
         Assert.assertNotNull(ec);
     }
 
