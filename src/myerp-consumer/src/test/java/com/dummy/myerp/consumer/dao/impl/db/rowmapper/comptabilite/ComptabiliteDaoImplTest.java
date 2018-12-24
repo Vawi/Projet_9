@@ -53,6 +53,14 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     }
 
     @Test
+    public void loadEcritureComptable(){
+        EcritureComptable vEcriture  = new EcritureComptable();
+        vEcriture.setId(-1);
+        dao.loadListLigneEcriture(vEcriture);
+        Assert.assertEquals(3, vEcriture.getListLigneEcriture().size());
+    }
+
+    @Test
     public void insertEcritureComptable() throws NotFoundException {
         EcritureComptable ecriture  = new EcritureComptable();
         Date currentDate = new Date();
@@ -62,8 +70,12 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
         ecriture.setDate(currentDate);
         ecriture.setLibelle("LibTest");
 
-        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(111111),
-                "Test", new BigDecimal(200),new BigDecimal(200)));
+        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(123),
+                "Test1", new BigDecimal(200),new BigDecimal(100)));
+        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(234),
+                "Test2", new BigDecimal(150),new BigDecimal(100)));
+        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(345),
+                "Test3", new BigDecimal(100),new BigDecimal(250)));
 
         dao.insertEcritureComptable(ecriture);
         EcritureComptable ecritureBis = dao.getEcritureComptableByRef("TT-" + currentYear + "/00200");
