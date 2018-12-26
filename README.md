@@ -2,6 +2,7 @@
 
 ## Build
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/16f296c3c8ef44cf910693190f4fc373)](https://app.codacy.com/app/Vawi/Projet_9?utm_source=github.com&utm_medium=referral&utm_content=Vawi/Projet_9&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/Vawi/Projet_9.svg?branch=master)](https://travis-ci.org/Vawi/Projet_9)
 
 
