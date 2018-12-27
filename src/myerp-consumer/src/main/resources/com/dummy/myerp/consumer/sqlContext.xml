@@ -10,21 +10,9 @@
     <!-- ========== ComptabiliteDaoImpl ========== -->
     <bean id="ComptabiliteDaoImpl" class="com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl"
           factory-method="getInstance">
-        <property name="SQLgetListCompteComptable">
-            <value>
-                SELECT * FROM myerp.compte_comptable
-            </value>
-        </property>
-        <property name="SQLgetListJournalComptable">
-            <value>
-                SELECT * FROM myerp.journal_comptable
-            </value>
-        </property>
-        <property name="SQLgetListEcritureComptable">
-            <value>
-                SELECT * FROM myerp.ecriture_comptable
-            </value>
-        </property>
+        <property name="SQLgetListCompteComptable" value="SELECT * FROM myerp.compte_comptable"/>
+        <property name="SQLgetListJournalComptable" value="SELECT * FROM myerp.journal_comptable"/>
+        <property name="SQLgetListEcritureComptable" value="SELECT * FROM myerp.ecriture_comptable"/>
         <property name="SQLgetEcritureComptable">
             <value>
                 SELECT * FROM myerp.ecriture_comptable
