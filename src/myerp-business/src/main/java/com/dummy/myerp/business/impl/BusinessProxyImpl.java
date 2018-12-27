@@ -44,8 +44,8 @@ public class BusinessProxyImpl implements BusinessProxy {
      * @param pTransactionManager -
      * @return {@link BusinessProxyImpl}
      */
-    public static BusinessProxyImpl getInstance(DaoProxy pDaoProxy,
-                                                TransactionManager pTransactionManager) {
+    public static BusinessProxyImpl getInstance(final DaoProxy pDaoProxy,
+                                                final TransactionManager pTransactionManager) {
         daoProxy = pDaoProxy;
         AbstractBusinessManager.configure(BusinessProxyImpl.INSTANCE, pDaoProxy, pTransactionManager);
         return BusinessProxyImpl.INSTANCE;

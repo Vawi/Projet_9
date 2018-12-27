@@ -13,7 +13,7 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 public class CompteComptableRM implements RowMapper<CompteComptable> {
 
     @Override
-    public CompteComptable mapRow(ResultSet pRS, int pRowNum) throws SQLException {
+    public CompteComptable mapRow(final ResultSet pRS, final int pRowNum) throws SQLException {
         CompteComptable vBean = new CompteComptable();
         vBean.setNumero(pRS.getInt("numero"));
         vBean.setLibelle(pRS.getString("libelle"));

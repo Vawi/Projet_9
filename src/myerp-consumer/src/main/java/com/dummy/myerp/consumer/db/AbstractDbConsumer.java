@@ -18,7 +18,8 @@ public abstract class AbstractDbConsumer {
 
 // ==================== Attributs Static ====================
     /** Logger Log4j pour la classe */
-    private static final Logger LOGGER = LogManager.getLogger(AbstractDbConsumer.class);
+    private static final Logger LOGGER =
+            LogManager.getLogger(AbstractDbConsumer.class);
 
 
     /** Map des DataSources */
@@ -53,10 +54,11 @@ public abstract class AbstractDbConsumer {
      * @param pDataSourceId -
      * @return SimpleJdbcTemplate
      */
-    protected DataSource getDataSource(DataSourcesEnum pDataSourceId) {
+    protected DataSource getDataSource(final DataSourcesEnum pDataSourceId) {
         DataSource vRetour = this.mapDataSource.get(pDataSourceId);
         if (vRetour == null) {
-            throw new UnsatisfiedLinkError("La DataSource suivante n'a pas été initialisée : " + pDataSourceId);
+            throw new UnsatisfiedLinkError("La DataSource suivante n'a pas été initialisée : "
+                    + pDataSourceId);
         }
         return vRetour;
     }
@@ -73,8 +75,8 @@ public abstract class AbstractDbConsumer {
      * @param pSeqValueClass : Classe de la valeur de la séquence
      * @return la dernière valeur de la séquence
      */
-    protected <T> T queryGetSequenceValuePostgreSQL(DataSourcesEnum pDataSourcesId,
-                                                    String pSeqName, Class<T> pSeqValueClass) {
+    protected <T> T queryGetSequenceValuePostgreSQL(final DataSourcesEnum pDataSourcesId,
+                                                    final String pSeqName, Class<T> pSeqValueClass) {
 
         JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource(pDataSourcesId));
         String vSeqSQL = "SELECT last_value FROM " + pSeqName;
@@ -90,7 +92,7 @@ public abstract class AbstractDbConsumer {
      *
      * @param pMapDataSource -
      */
-    public static void configure(Map<DataSourcesEnum, DataSource> pMapDataSource) {
+    public static void configure(final Map<DataSourcesEnum, DataSource> pMapDataSource) {
         // On pilote l'ajout avec l'Enum et on ne rajoute pas tout à l'aveuglette...
         //   ( pas de AbstractDbDao.mapDataSource.putAll(...) )
         Map<DataSourcesEnum, DataSource> vMapDataSource = new HashMap<>(DataSourcesEnum.values().length);

@@ -18,7 +18,7 @@ public class LigneEcritureComptableRM implements RowMapper<LigneEcritureComptabl
 
 
     @Override
-    public LigneEcritureComptable mapRow(ResultSet pRS, int pRowNum) throws SQLException {
+    public LigneEcritureComptable mapRow(final ResultSet pRS, final int pRowNum) throws SQLException {
         LigneEcritureComptable vBean = new LigneEcritureComptable();
         vBean.setCompteComptable(compteComptableDaoCache.getByNumero(pRS.getObject("compte_comptable_numero",
                                                                                    Integer.class)));

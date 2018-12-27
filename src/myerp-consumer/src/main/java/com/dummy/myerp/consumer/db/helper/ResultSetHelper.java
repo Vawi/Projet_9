@@ -32,7 +32,7 @@ public abstract class ResultSetHelper {
      * @return <code>Integer</code> ou <code>null</code>
      * @throws SQLException sur erreur SQL
      */
-    public static Integer getInteger(ResultSet pRS, String pColName) throws SQLException {
+    public static Integer getInteger(final ResultSet pRS, final String pColName) throws SQLException {
         Integer vRetour = null;
         int vInt = pRS.getInt(pColName);
         if (!pRS.wasNull()) {
@@ -50,7 +50,7 @@ public abstract class ResultSetHelper {
      * @return <code>Long</code> ou <code>null</code>
      * @throws SQLException sur erreur SQL
      */
-    public static Long getLong(ResultSet pRS, String pColName) throws SQLException {
+    public static Long getLong(final ResultSet pRS, final String pColName) throws SQLException {
         Long vRetour = null;
         Long vLong = pRS.getLong(pColName);
         if (!pRS.wasNull()) {
@@ -69,7 +69,7 @@ public abstract class ResultSetHelper {
      * @return {@link Date} ou <code>null</code>
      * @throws SQLException sur erreur SQL
      */
-    public static Date getDate(ResultSet pRS, String pColName) throws SQLException {
+    public static Date getDate(final ResultSet pRS, final String pColName) throws SQLException {
         Date vDate = pRS.getDate(pColName);
         if (vDate != null) {
             vDate = DateUtils.truncate(vDate, Calendar.DATE);

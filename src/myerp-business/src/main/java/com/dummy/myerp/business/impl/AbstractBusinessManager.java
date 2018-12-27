@@ -31,9 +31,9 @@ public abstract class AbstractBusinessManager {
      * @param pDaoProxy           -
      * @param pTransactionManager -
      */
-    public static void configure(BusinessProxy pBusinessProxy,
-                                 DaoProxy pDaoProxy,
-                                 TransactionManager pTransactionManager) {
+    public static void configure(final BusinessProxy pBusinessProxy,
+                                 final DaoProxy pDaoProxy,
+                                 final TransactionManager pTransactionManager) {
         businessProxy = pBusinessProxy;
         daoProxy = pDaoProxy;
         transactionManager = pTransactionManager;
@@ -78,7 +78,8 @@ public abstract class AbstractBusinessManager {
      * @return Validator
      */
     protected Validator getConstraintValidator() {
-        Configuration<?> vConfiguration = Validation.byDefaultProvider().configure();
+        Configuration<?> vConfiguration =
+                Validation.byDefaultProvider().configure();
         ValidatorFactory vFactory = vConfiguration.buildValidatorFactory();
         Validator vValidator = vFactory.getValidator();
         return vValidator;
