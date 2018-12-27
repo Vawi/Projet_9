@@ -9,6 +9,7 @@ services:
 before_install:
 - cd docker/dev
 - docker-compose up -d
+- cd ../../src
 
 script:
 - mvn test -B
