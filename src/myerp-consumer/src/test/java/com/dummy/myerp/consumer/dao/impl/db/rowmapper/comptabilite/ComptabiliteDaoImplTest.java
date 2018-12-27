@@ -10,7 +10,6 @@ import com.dummy.myerp.testconsumer.consumer.ConsumerTestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
