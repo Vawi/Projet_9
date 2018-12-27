@@ -26,25 +26,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
  */
 public class ComptabiliteDaoImpl extends AbstractDbConsumer implements ComptabiliteDao {
 
-    // ==================== Constructeurs ====================
-    /** Instance unique de la classe (design pattern Singleton) */
-    private static final ComptabiliteDaoImpl INSTANCE = new ComptabiliteDaoImpl();
-
-    /**
-     * Renvoie l'instance unique de la classe (design pattern Singleton).
-     *
-     * @return {@link ComptabiliteDaoImpl}
-     */
-    public static ComptabiliteDaoImpl getInstance() {
-        return ComptabiliteDaoImpl.INSTANCE;
-    }
-
-    /**
-     * Constructeur.
-     */
-    protected ComptabiliteDaoImpl() {
-        super();
-    }
+    // ==================== Requete ====================
 
     /** SQLgetListCompteComptable */
     private static String SQLgetListCompteComptable;
@@ -78,6 +60,28 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     /** SQLdeleteListLigneEcritureComptable */
     private static String SQLdeleteListLigneEcritureComptable;
+
+    // ==================== Constructeurs ====================
+    /** Instance unique de la classe (design pattern Singleton) */
+    private static final ComptabiliteDaoImpl INSTANCE = new ComptabiliteDaoImpl();
+
+    /**
+     * Renvoie l'instance unique de la classe (design pattern Singleton).
+     *
+     * @return {@link ComptabiliteDaoImpl}
+     */
+    public static ComptabiliteDaoImpl getInstance() {
+        return ComptabiliteDaoImpl.INSTANCE;
+    }
+
+    /**
+     * Constructeur.
+     */
+    protected ComptabiliteDaoImpl() {
+        super();
+    }
+
+    // ==================== Setter Requete ====================
 
     public void setSQLgetListCompteComptable(final String pSQLgetListCompteComptable) {
         SQLgetListCompteComptable = pSQLgetListCompteComptable;
