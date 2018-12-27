@@ -8,14 +8,15 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/Vawi/Projet_9/badge.svg?branch=master)](https://coveralls.io/github/Vawi/Projet_9?branch=master)
 
-
 ## Organisation du répertoire
 
 *   `doc` : documentation
-*   `docker` : répertoire relatifs aux conteneurs _docker_ utiles pour le projet
-    *   `dev` : environnement de développement
-*   `src` : code source de l'application
 
+*   `docker` : répertoire relatifs aux conteneurs _docker_ utiles pour le projet
+
+    *   `dev` : environnement de développement
+    
+*   `src` : code source de l'application
 
 ## Environnement de développement
 
@@ -27,19 +28,15 @@ Il comporte :
 
 *   une base de données _PostgreSQL_ contenant un jeu de données de démo (`postgresql://127.0.0.1:9032/db_myerp`)
 
-
-
 ### Lancement
 
     cd docker/dev
     docker-compose up
 
-
 ### Arrêt
 
     cd docker/dev
     docker-compose stop
-
 
 ### Remise à zero
 
