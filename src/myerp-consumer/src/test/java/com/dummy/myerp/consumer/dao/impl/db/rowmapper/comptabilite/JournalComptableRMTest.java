@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.validation.constraints.AssertTrue;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
