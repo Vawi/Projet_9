@@ -1,20 +1,19 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import com.dummy.myerp.model.bean.comptabilite.*;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
@@ -76,8 +75,16 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
-                    (table sequence_ecriture_comptable)
-                2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
+                    (table sequence_ecriture_comptable) */
+
+        List<EcritureComptable> l = getListEcritureComptable();
+        List<SequenceEcritureComptable> lSeq = new ArrayList<>();
+
+        for(EcritureComptable i : l) {
+
+        }
+
+                /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
                         1. Utiliser le numéro 1.
                     * Sinon :
                         1. Utiliser la dernière valeur + 1
