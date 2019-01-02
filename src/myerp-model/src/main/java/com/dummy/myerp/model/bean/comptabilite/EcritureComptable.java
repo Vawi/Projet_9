@@ -111,12 +111,7 @@ public class EcritureComptable {
      * @return boolean
      */
     public boolean isEquilibree() {
-        if(getTotalDebit().compareTo(getTotalCredit()) == 0){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return getTotalDebit().compareTo(getTotalCredit()) == 0;
     }
 
     // ==================== Méthodes ====================

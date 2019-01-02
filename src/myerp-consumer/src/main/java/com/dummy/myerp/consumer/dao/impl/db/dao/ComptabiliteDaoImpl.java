@@ -264,7 +264,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         this.insertListLigneEcritureComptable(pEcritureComptable);
     }
 
-
     // ==================== EcritureComptable - DELETE ====================
 
     @Override
