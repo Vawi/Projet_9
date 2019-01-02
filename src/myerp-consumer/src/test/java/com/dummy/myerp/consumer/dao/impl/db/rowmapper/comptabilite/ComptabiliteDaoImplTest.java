@@ -9,6 +9,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 import com.dummy.myerp.testconsumer.consumer.ConsumerTestCase;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class ComptabiliteDaoImplTest extends ConsumerTestCase {
 
+    @Mock
     private ComptabiliteDao dao = getDaoProxy().getComptabiliteDao();
 
     @Test
@@ -79,8 +81,8 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
         dao.insertEcritureComptable(ecriture);
         EcritureComptable ecritureBis = dao.getEcritureComptableByRef("TT-" + currentYear + "/00200");
 
-        Assert.assertTrue(ecriture.getReference().equals(ecritureBis.getReference()));
-        Assert.assertTrue(ecriture.getLibelle().equals(ecritureBis.getLibelle()));
+        Assert.assertEquals(ecriture.getReference(), ecritureBis.getReference());
+        Assert.assertEquals(ecriture.getLibelle(), ecritureBis.getLibelle());
 
         dao.deleteEcritureComptable(ecritureBis.getId());
     }
