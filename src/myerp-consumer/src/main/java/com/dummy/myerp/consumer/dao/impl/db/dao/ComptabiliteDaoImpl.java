@@ -240,7 +240,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
             vSqlParams.addValue("credit", vLigne.getCredit());
 
-            vJdbcTemplate.update(SQLinsertListLigneEcritureComptable, vSqlParams);
+            vJdbcTemplate.update(SQLinsertListLigneEcritureComptable, vSqlParams); //Bug a aprtir d'ici, probleme id
         }
     }
 

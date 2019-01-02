@@ -9,7 +9,6 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 import com.dummy.myerp.testconsumer.consumer.ConsumerTestCase;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,7 +18,6 @@ import java.util.List;
 
 public class ComptabiliteDaoImplTest extends ConsumerTestCase {
 
-    @Mock
     private ComptabiliteDao dao = getDaoProxy().getComptabiliteDao();
 
     @Test
@@ -63,26 +61,27 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
 
     @Test
     public void insertEcritureComptable() throws NotFoundException {
-        EcritureComptable ecriture  = new EcritureComptable();
+
+        EcritureComptable pEcriture  = new EcritureComptable();
         Date currentDate = new Date();
         int currentYear = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault()).toLocalDate().getYear();
-        ecriture.setJournal(new JournalComptable("OD", "TestInsert"));
-        ecriture.setReference("TT-" + currentYear + "/00200");
-        ecriture.setDate(currentDate);
-        ecriture.setLibelle("LibTest");
+        pEcriture.setJournal(new JournalComptable("OD", "TestInsert"));
+        pEcriture.setReference("TT-" + currentYear + "/00200");
+        pEcriture.setDate(currentDate);
+        pEcriture.setLibelle("LibTest");
 
-        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(123),
+        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(123),
                 "Test1", new BigDecimal(200),new BigDecimal(100)));
-        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(234),
+        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(234),
                 "Test2", new BigDecimal(150),new BigDecimal(100)));
-        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(345),
+        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(345),
                 "Test3", new BigDecimal(100),new BigDecimal(250)));
 
-        dao.insertEcritureComptable(ecriture);
+        dao.insertEcritureComptable(pEcriture);
         EcritureComptable ecritureBis = dao.getEcritureComptableByRef("TT-" + currentYear + "/00200");
 
-        Assert.assertEquals(ecriture.getReference(), ecritureBis.getReference());
-        Assert.assertEquals(ecriture.getLibelle(), ecritureBis.getLibelle());
+        Assert.assertEquals(pEcriture.getReference(), ecritureBis.getReference());
+        Assert.assertEquals(pEcriture.getLibelle(), ecritureBis.getLibelle());
 
         dao.deleteEcritureComptable(ecritureBis.getId());
     }
