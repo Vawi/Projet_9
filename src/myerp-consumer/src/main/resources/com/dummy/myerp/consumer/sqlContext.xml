@@ -25,6 +25,7 @@
                 WHERE reference = :reference
             </value>
         </property>
+        <property name="SQLgetSequenceEcritureComptable" value="SELECT * FROM myerp.sequence_ecriture_comptable"/>
         <property name="SQLloadListLigneEcriture">
             <value>
                 SELECT * FROM myerp.ligne_ecriture_comptable

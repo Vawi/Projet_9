@@ -77,12 +77,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
                     (table sequence_ecriture_comptable) */
 
-        List<EcritureComptable> l = getListEcritureComptable();
-        List<SequenceEcritureComptable> lSeq = new ArrayList<>();
 
-        for(EcritureComptable i : l) {
-
-        }
 
                 /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
                         1. Utiliser le numéro 1.
