@@ -25,7 +25,12 @@
                 WHERE reference = :reference
             </value>
         </property>
-        <property name="SQLgetSequenceEcritureComptable" value="SELECT * FROM myerp.sequence_ecriture_comptable"/>
+        <property name="SQLgetSequenceEcritureComptable">
+                <value>
+                    SELECT * FROM myerp.ecriture_comptable
+                    WHERE journal_code = :journal_code
+                </value>
+        </property>
         <property name="SQLloadListLigneEcriture">
             <value>
                 SELECT * FROM myerp.ligne_ecriture_comptable

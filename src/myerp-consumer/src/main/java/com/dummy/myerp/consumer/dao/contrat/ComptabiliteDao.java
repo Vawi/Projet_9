@@ -58,7 +58,7 @@ public interface ComptabiliteDao {
      * Renvoie la liste des séquences ecritures comptables
      * @return {@link List}
      */
-    List<SequenceEcritureComptable> getSequenceEcritureComptable();
+    SequenceEcritureComptable getSequenceEcritureComptable(String journalCode) throws NotFoundException;
 
     /**
      * Charge la liste des lignes d'écriture de l'écriture comptable {@code pEcritureComptable}

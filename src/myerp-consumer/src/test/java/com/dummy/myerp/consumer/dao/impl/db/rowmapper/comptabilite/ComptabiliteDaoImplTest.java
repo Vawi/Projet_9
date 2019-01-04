@@ -86,26 +86,30 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
 
     @Test
     public void updateEcritureComptableTest() throws NotFoundException{
-        EcritureComptable ecriture  = new EcritureComptable();
+
+        EcritureComptable pEcriture  = new EcritureComptable();
         Date currentDate = new Date();
         int currentYear = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault()).toLocalDate().getYear();
-        ecriture.setJournal(new JournalComptable("OD", "Opérations Diverses"));
-        ecriture.setReference("AC-" + currentYear + "/00200");
-        ecriture.setDate(currentDate);
-        ecriture.setLibelle("Sandwichs");
+        pEcriture.setJournal(new JournalComptable("OD", "TestInsert"));
+        pEcriture.setReference("TT-" + currentYear + "/00055");
+        pEcriture.setDate(currentDate);
+        pEcriture.setLibelle("Test");
 
-        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(606),"Club saumon", new BigDecimal(10),null));
-        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(4456),"TVA 20%", new BigDecimal(2),null));
-        ecriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(401),"Facture S110001", null,new BigDecimal(12)));
+        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(123),
+                "Test1", new BigDecimal(200),new BigDecimal(100)));
+        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(234),
+                "Test2", new BigDecimal(150),new BigDecimal(100)));
+        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(345),
+                "Test3", new BigDecimal(100),new BigDecimal(250)));
 
-        dao.insertEcritureComptable(ecriture);
-        EcritureComptable ecritureBis = dao.getEcritureComptableByRef("AC-" + currentYear + "/00200");
+        dao.insertEcritureComptable(pEcriture);
+        EcritureComptable ecritureBis = dao.getEcritureComptableByRef("TT-" + currentYear + "/00055");
 
-        ecritureBis.setLibelle("panini");
+        ecritureBis.setLibelle("TestUpdate");
 
         dao.updateEcritureComptable(ecritureBis);
 
-        Assert.assertEquals("panini", dao.getEcritureComptableByRef("AC-" + currentYear + "/00200").getLibelle());
+        Assert.assertEquals("TestUpdate", dao.getEcritureComptableByRef("TT-" + currentYear + "/00055").getLibelle());
         dao.deleteEcritureComptable(ecritureBis.getId());
     }
 
