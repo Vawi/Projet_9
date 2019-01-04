@@ -46,6 +46,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     /** SQLinsertEcritureComptable */
     private static String SQLinsertEcritureComptable;
 
+    /** SQLinsertEcritureComptable */
+    private static String SQLinsertSequenceEcritureComptable;
+
     /** SQLinsertListLigneEcritureComptable */
     private static String SQLinsertListLigneEcritureComptable;
 
@@ -112,6 +115,10 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         SQLinsertEcritureComptable = pSQLinsertEcritureComptable;
     }
 
+    public void setSQLinsertSequenceEcritureComptable(final String pSQLinsertSequenceEcritureComptable) {
+        SQLinsertSequenceEcritureComptable = pSQLinsertSequenceEcritureComptable;
+    }
+
     public void setSQLinsertListLigneEcritureComptable(final String pSQLinsertListLigneEcritureComptable) {
         SQLinsertListLigneEcritureComptable = pSQLinsertListLigneEcritureComptable;
     }
@@ -156,16 +163,18 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     }
 
     @Override
-    public SequenceEcritureComptable getSequenceEcritureComptable(String pJournalCode) throws NotFoundException {
+    public SequenceEcritureComptable getSequenceEcritureComptable(String pJournalCode, int pAnnee) throws NotFoundException {
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
         MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
-        vSqlParams.addValue("code_journal", pJournalCode);
+        vSqlParams.addValue("journal_code", pJournalCode);
+        vSqlParams.addValue("annee", pAnnee);
         SequenceEcritureComptableRM vRM = new SequenceEcritureComptableRM();
         SequenceEcritureComptable vBean;
         try {
             vBean = vJdbcTemplate.queryForObject(SQLgetSequenceEcritureComptable, vSqlParams, vRM);
         } catch (EmptyResultDataAccessException vEx) {
-            throw new NotFoundException("Sequence non trouvée : code journal = " + pJournalCode);
+            vBean = null;
+            //throw new NotFoundException("Sequence non trouvée : code journal = " + pJournalCode);
         }
         return vBean;
     }
@@ -255,6 +264,16 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
             vJdbcTemplate.update(SQLinsertListLigneEcritureComptable, vSqlParams);
         }
+    }
+
+    public void insertSequenceEcritureComptable(final SequenceEcritureComptable pSequenceEcritureComptable, final String journalCode) {
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("journal_code", journalCode);
+        vSqlParams.addValue("annee", pSequenceEcritureComptable.getAnnee());
+        vSqlParams.addValue("derniere_valeur", pSequenceEcritureComptable.getDerniereValeur());
+
+        vJdbcTemplate.update(SQLinsertSequenceEcritureComptable, vSqlParams);
     }
 
     // ==================== EcritureComptable - UPDATE ====================

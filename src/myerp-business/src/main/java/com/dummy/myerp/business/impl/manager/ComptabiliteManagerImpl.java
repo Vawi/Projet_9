@@ -1,7 +1,6 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -70,23 +69,47 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     // TODO à tester
     @Override
-    public synchronized void addReference(final EcritureComptable pEcritureComptable) {
+    public synchronized void addReference(final EcritureComptable pEcritureComptable) throws NotFoundException {
         // TODO à implémenter
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
                     (table sequence_ecriture_comptable) */
 
+        String ref = "";
+
+        //Récupération de l'année de l'écriture
+        Calendar date = Calendar.getInstance();
+        date.setTime(pEcritureComptable.getDate());
+        Integer anneeEcriture = date.get(Calendar.YEAR);
+
+        //Chargement de la séquence avec le code journal de l'écriture comptable
+        SequenceEcritureComptable seq = getDaoProxy().getComptabiliteDao()
+                .getSequenceEcritureComptable(pEcritureComptable.getJournal().getCode(), anneeEcriture);
+
+        int valSeq = 0;
+
+        if(anneeEcriture.equals(seq.getAnnee())) {
+            valSeq = seq.getDerniereValeur() + 1;
+        } else {
+            valSeq = 1;
+        }
+
+        /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
+            1. Utiliser le numéro 1. */
+
+        /* Sinon :
+            1. Utiliser la dernière valeur + 1
+            3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5) */
+
+        pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/");
 
 
-                /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
-                        1. Utiliser le numéro 1.
-                    * Sinon :
-                        1. Utiliser la dernière valeur + 1
-                3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
-                4.  Enregistrer (insert/update) la valeur de la séquence en persitance
-                    (table sequence_ecriture_comptable)
-         */
+        /* 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
+        (table sequence_ecriture_comptable)
+        */
+
+        getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
     }
 
     /**

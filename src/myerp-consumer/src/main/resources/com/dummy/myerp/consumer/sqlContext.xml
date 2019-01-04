@@ -27,8 +27,8 @@
         </property>
         <property name="SQLgetSequenceEcritureComptable">
                 <value>
-                    SELECT * FROM myerp.ecriture_comptable
-                    WHERE journal_code = :journal_code
+                    SELECT * FROM myerp.sequence_ecriture_comptable
+                    WHERE journal_code = :journal_code AND annee = :annee
                 </value>
         </property>
         <property name="SQLloadListLigneEcriture">
@@ -47,6 +47,14 @@
                     nextval('myerp.ecriture_comptable_id_seq'),
                     :journal_code, :reference, :date, :libelle
                 )
+            </value>
+        </property>
+        <property name="SQLinsertSequenceEcritureComptable">
+            <value>
+                INSERT INTO myerp.sequence_ecriture_comptable (
+                    journal_code, annee, derniere_valeur
+                ) VALUES (
+                    :journal_code, :annee, :derniere_valeur
             </value>
         </property>
         <property name="SQLinsertListLigneEcritureComptable">

@@ -1,10 +1,7 @@
 package com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite;
 
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import com.dummy.myerp.testconsumer.consumer.ConsumerTestCase;
 import org.junit.Assert;
@@ -49,6 +46,16 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     public void getEcritureComptableByRef() throws NotFoundException {
         EcritureComptable ec = dao.getEcritureComptableByRef("AC-2016/00001");
         Assert.assertNotNull(ec);
+    }
+
+    @Test
+    public void getSequenceEcritureComptable() throws NotFoundException {
+
+        SequenceEcritureComptable seq = dao.getSequenceEcritureComptable("BQ", 2016);
+        SequenceEcritureComptable seq2 = dao.getSequenceEcritureComptable("TT", 1325);
+
+        Assert.assertNotNull(seq);
+        Assert.assertNull(seq2);
     }
 
     @Test
