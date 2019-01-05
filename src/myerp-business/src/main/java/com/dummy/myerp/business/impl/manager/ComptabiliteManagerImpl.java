@@ -81,7 +81,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         //Récupération de l'année de l'écriture
         Calendar date = Calendar.getInstance();
         date.setTime(pEcritureComptable.getDate());
-        Integer anneeEcriture = date.get(Calendar.YEAR);
+        int anneeEcriture = date.get(Calendar.YEAR);
 
         //Chargement de la séquence avec le code journal de l'écriture comptable
         SequenceEcritureComptable seq = getDaoProxy().getComptabiliteDao()
@@ -89,10 +89,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         int valSeq = 0;
 
-        if(anneeEcriture.equals(seq.getAnnee())) {
+        if(anneeEcriture == seq.getAnnee()) {
             valSeq = seq.getDerniereValeur() + 1;
+            pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/"); // A COMPLETER
         } else {
-            valSeq = 1;
+            seq.setAnnee(anneeEcriture);
+            seq.setDerniereValeur(1);
+            getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
+            pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/" + "00001");
         }
 
         /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
@@ -101,8 +105,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         /* Sinon :
             1. Utiliser la dernière valeur + 1
             3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5) */
-
-        pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/");
 
 
         /* 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
@@ -170,6 +172,19 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+        String[] parts = pEcritureComptable.getReference().split("\\p{Punct}");
+        String codeJournal = parts[0];
+        String date = parts[2];
+
+        if(!codeJournal.equals(pEcritureComptable.getJournal().getCode()))
+            throw new FunctionalException("Le code journal de la référence est différent du code journal.");
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(pEcritureComptable.getDate());
+        String annee = Integer.toString(cal.get(Calendar.YEAR));
+
+        if(!date.equals(annee))
+            throw new FunctionalException("L'année de la référence est différente de l'année d'écriture.");
     }
 
 

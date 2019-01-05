@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.dummy.myerp.business.contrat.BusinessProxy;
+import com.dummy.myerp.technical.exception.NotFoundException;
 import com.dummy.myerp.testbusiness.business.BusinessTestCase;
 import org.junit.Assert;
 import org.junit.Test;
