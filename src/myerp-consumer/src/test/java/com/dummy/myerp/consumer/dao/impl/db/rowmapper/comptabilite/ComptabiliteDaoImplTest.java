@@ -16,6 +16,24 @@ import java.util.List;
 public class ComptabiliteDaoImplTest extends ConsumerTestCase {
 
     private ComptabiliteDao dao = getDaoProxy().getComptabiliteDao();
+    private EcritureComptable vEcritureComptable = new EcritureComptable();
+    private int currentYear = 0;
+
+    private void setEcriture() {
+        Date currentDate = new Date();
+        currentYear = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault()).toLocalDate().getYear();
+        vEcritureComptable.setJournal(new JournalComptable("OD", "TestInsert"));
+        vEcritureComptable.setReference("TT-" + currentYear + "/00055");
+        vEcritureComptable.setDate(currentDate);
+        vEcritureComptable.setLibelle("Test");
+
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(401),
+                "Test1", new BigDecimal(200),new BigDecimal(100)));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
+                "Test2", new BigDecimal(150),new BigDecimal(100)));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(512),
+                "Test3", new BigDecimal(100),new BigDecimal(250)));
+    }
 
     @Test
     public void getListJournalComptable() {
@@ -69,55 +87,25 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     @Test
     public void insertEcritureComptable() throws NotFoundException {
 
-        EcritureComptable pEcriture  = new EcritureComptable();
-        Date currentDate = new Date();
-        int currentYear = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault()).toLocalDate().getYear();
-        pEcriture.setJournal(new JournalComptable("OD", "TestInsert"));
-        pEcriture.setReference("TT-" + currentYear + "/00055");
-        pEcriture.setDate(currentDate);
-        pEcriture.setLibelle("Test");
+        this.setEcriture();
 
-        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(123),
-                "Test1", new BigDecimal(200),new BigDecimal(100)));
-        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(234),
-                "Test2", new BigDecimal(150),new BigDecimal(100)));
-        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(345),
-                "Test3", new BigDecimal(100),new BigDecimal(250)));
-
-        dao.insertEcritureComptable(pEcriture);
+        dao.insertEcritureComptable(vEcritureComptable);
         EcritureComptable ecritureBis = dao.getEcritureComptableByRef("TT-" + currentYear + "/00055");
 
-        Assert.assertEquals(pEcriture.getReference(), ecritureBis.getReference());
-        Assert.assertEquals(pEcriture.getLibelle(), ecritureBis.getLibelle());
+        Assert.assertEquals(vEcritureComptable.getReference(), ecritureBis.getReference());
+        Assert.assertEquals(vEcritureComptable.getLibelle(), ecritureBis.getLibelle());
     }
 
     @Test
     public void updateEcritureComptableTest() throws NotFoundException{
 
-        EcritureComptable pEcriture  = new EcritureComptable();
-        Date currentDate = new Date();
-        int currentYear = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault()).toLocalDate().getYear();
-        pEcriture.setJournal(new JournalComptable("OD", "TestInsert"));
-        pEcriture.setReference("TT-" + currentYear + "/00055");
-        pEcriture.setDate(currentDate);
-        pEcriture.setLibelle("Test");
+        EcritureComptable ecriture = dao.getEcritureComptableByRef("AC-2016/00001");
 
-        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(123),
-                "Test1", new BigDecimal(200),new BigDecimal(100)));
-        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(234),
-                "Test2", new BigDecimal(150),new BigDecimal(100)));
-        pEcriture.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(345),
-                "Test3", new BigDecimal(100),new BigDecimal(250)));
+        ecriture.setLibelle("TestUpdate");
 
-        dao.insertEcritureComptable(pEcriture);
-        EcritureComptable ecritureBis = dao.getEcritureComptableByRef("TT-" + currentYear + "/00055");
+        dao.updateEcritureComptable(ecriture);
 
-        ecritureBis.setLibelle("TestUpdate");
-
-        dao.updateEcritureComptable(ecritureBis);
-
-        Assert.assertEquals("TestUpdate", dao.getEcritureComptableByRef("TT-" + currentYear + "/00055").getLibelle());
-        dao.deleteEcritureComptable(ecritureBis.getId());
+        Assert.assertEquals("TestUpdate", dao.getEcritureComptableByRef("AC-2016/00001").getLibelle());
     }
 
 }
