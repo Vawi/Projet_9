@@ -82,6 +82,13 @@ public interface ComptabiliteDao {
     void insertEcritureComptable(EcritureComptable pEcritureComptable);
 
     /**
+     * Met a jour la séquence écriture comptable
+     * @param pSequenceEcritureComptable l'écriture comptable
+     * @param journalCode le code journal de l'écriture
+     */
+    void updateSequenceEcritureComptable(final SequenceEcritureComptable pSequenceEcritureComptable, final String journalCode);
+
+    /**
      * Met à jour l'écriture comptable.
      *
      * @param pEcritureComptable -

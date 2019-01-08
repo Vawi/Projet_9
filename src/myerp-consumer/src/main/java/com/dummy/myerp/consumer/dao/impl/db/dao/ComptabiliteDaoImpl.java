@@ -52,6 +52,8 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     /** SQLinsertListLigneEcritureComptable */
     private static String SQLinsertListLigneEcritureComptable;
 
+    private static String SQLupdateSequenceEcritureComptable;
+
     /** SQLupdateEcritureComptable */
     private static String SQLupdateEcritureComptable;
 
@@ -125,6 +127,10 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     public void setSQLupdateEcritureComptable(final String pSQLupdateEcritureComptable) {
         SQLupdateEcritureComptable = pSQLupdateEcritureComptable;
+    }
+
+    public void setSQLupdateSequenceEcritureComptable(final String pSQLsequenceEcritureComptable) {
+        SQLupdateSequenceEcritureComptable = pSQLsequenceEcritureComptable;
     }
 
 
@@ -294,6 +300,17 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         // ===== Liste des lignes d'écriture
         this.deleteListLigneEcritureComptable(pEcritureComptable.getId());
         this.insertListLigneEcritureComptable(pEcritureComptable);
+    }
+
+    @Override
+    public void updateSequenceEcritureComptable(final SequenceEcritureComptable pSequenceEcritureComptable, final String journalCode) {
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("journal_code", journalCode);
+        vSqlParams.addValue("annee", pSequenceEcritureComptable.getAnnee());
+        vSqlParams.addValue("derniere_valeur", pSequenceEcritureComptable.getDerniereValeur());
+
+        vJdbcTemplate.update(SQLupdateSequenceEcritureComptable, vSqlParams);
     }
 
     // ==================== EcritureComptable - DELETE ====================

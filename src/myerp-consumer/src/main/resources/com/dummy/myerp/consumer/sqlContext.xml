@@ -68,6 +68,14 @@
                 )
             </value>
         </property>
+        <property name="SQLupdateSequenceEcritureComptable">
+            <value>
+                UPDATE myerp.sequence_ecriture_comptable SET
+                    derniere_valeur = :derniere_valeur;
+                WHERE
+                    journal_code = :journalcode AND annee = :annee
+            </value>
+        </property>
         <property name="SQLupdateEcritureComptable">
             <value>
                 UPDATE myerp.ecriture_comptable SET
