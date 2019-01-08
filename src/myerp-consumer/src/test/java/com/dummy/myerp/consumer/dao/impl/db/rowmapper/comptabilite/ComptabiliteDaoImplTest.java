@@ -72,6 +72,9 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
         SequenceEcritureComptable seq = dao.getSequenceEcritureComptable("BQ", 2016);
         SequenceEcritureComptable seq2 = dao.getSequenceEcritureComptable("TT", 1325);
 
+        System.out.println(seq);
+        System.out.println(seq2);
+
         Assert.assertNotNull(seq);
         Assert.assertNull(seq2);
     }

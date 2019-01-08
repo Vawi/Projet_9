@@ -89,28 +89,29 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         SequenceEcritureComptable seq = getDaoProxy().getComptabiliteDao()
                 .getSequenceEcritureComptable(pEcritureComptable.getJournal().getCode(), anneeEcriture);
 
-
-        if(anneeEcriture == seq.getAnnee()) {
-            valSeq.append((seq.getDerniereValeur() + 1));
-            ref = pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/";
-            while (valSeq.length() != 5) {
-                valSeq.insert(0, '0');
+        if(seq != null) {
+            if(anneeEcriture == seq.getAnnee()) {
+                valSeq.append((seq.getDerniereValeur() + 1));
+                ref = pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/";
+                while (valSeq.length() != 5) {
+                    valSeq.insert(0, '0');
+                }
+                ref = ref.concat(valSeq.toString());
+                pEcritureComptable.setReference(ref);
+                seq.setDerniereValeur(seq.getDerniereValeur() + 1);
+                //getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
             }
-            ref = ref.concat(valSeq.toString());
-            pEcritureComptable.setReference(ref);
-            seq.setDerniereValeur(seq.getDerniereValeur() + 1);
-            getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
+        } else {
+            seq = new SequenceEcritureComptable();
+            seq.setAnnee(anneeEcriture);
+            seq.setDerniereValeur(1);
+            pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/" + "00001");
+            System.out.println(pEcritureComptable);
+            //getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
         }
 
         /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
             1. Utiliser le numéro 1. */
-
-        else {
-            seq.setAnnee(anneeEcriture);
-            seq.setDerniereValeur(1);
-            pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/" + "00001");
-            getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
-        }
 
         /* Sinon :
             1. Utiliser la dernière valeur + 1

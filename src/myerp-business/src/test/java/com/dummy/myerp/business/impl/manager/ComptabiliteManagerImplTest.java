@@ -7,6 +7,7 @@ import java.util.List;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import com.dummy.myerp.testbusiness.business.BusinessTestCase;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
@@ -23,6 +24,7 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
     private EcritureComptable vEcritureComptable = new EcritureComptable();
 
+    @Before
     public void setEcriture() {
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
@@ -89,6 +91,7 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
     public void addReference() throws NotFoundException {
         manager.addReference(vEcritureComptable);
         System.out.println(vEcritureComptable.getReference());
+        Assert.assertNotNull(vEcritureComptable.getReference());
     }
 
     @Test
