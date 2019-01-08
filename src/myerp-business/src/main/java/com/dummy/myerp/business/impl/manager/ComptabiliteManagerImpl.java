@@ -98,6 +98,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             }
             ref = ref.concat(valSeq.toString());
             pEcritureComptable.setReference(ref);
+            seq.setDerniereValeur(seq.getDerniereValeur() + 1);
         }
 
         /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
@@ -106,7 +107,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         else {
             seq.setAnnee(anneeEcriture);
             seq.setDerniereValeur(1);
-            getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
             pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/" + "00001");
         }
 
@@ -114,6 +114,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             1. Utiliser la dernière valeur + 1
             3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5) */
 
+        getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
 
         /* 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
         (table sequence_ecriture_comptable)
