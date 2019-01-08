@@ -1,6 +1,7 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -76,7 +77,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
                     (table sequence_ecriture_comptable) */
 
-        String ref = "";
+        String ref;
+        StringBuilder valSeq = new StringBuilder();
 
         //Récupération de l'année de l'écriture
         Calendar date = Calendar.getInstance();
@@ -87,20 +89,26 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         SequenceEcritureComptable seq = getDaoProxy().getComptabiliteDao()
                 .getSequenceEcritureComptable(pEcritureComptable.getJournal().getCode(), anneeEcriture);
 
-        int valSeq = 0;
 
         if(anneeEcriture == seq.getAnnee()) {
-            valSeq = seq.getDerniereValeur() + 1;
-            pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/"); // A COMPLETER
-        } else {
+            valSeq.append((seq.getDerniereValeur() + 1));
+            ref = pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/";
+            while (valSeq.length() != 5) {
+                valSeq.insert(0, '0');
+            }
+            ref = ref.concat(valSeq.toString());
+            pEcritureComptable.setReference(ref);
+        }
+
+        /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
+            1. Utiliser le numéro 1. */
+
+        else {
             seq.setAnnee(anneeEcriture);
             seq.setDerniereValeur(1);
             getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
             pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/" + "00001");
         }
-
-        /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
-            1. Utiliser le numéro 1. */
 
         /* Sinon :
             1. Utiliser la dernière valeur + 1
