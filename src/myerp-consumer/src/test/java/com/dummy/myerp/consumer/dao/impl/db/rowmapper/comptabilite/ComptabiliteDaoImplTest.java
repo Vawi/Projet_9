@@ -50,7 +50,6 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     @Test
     public void getListEcritureComptable() {
         List<EcritureComptable> vList = dao.getListEcritureComptable();
-        System.out.println(vList);
         Assert.assertTrue(vList.size() >= 1);
     }
 
@@ -71,10 +70,6 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
 
         SequenceEcritureComptable seq = dao.getSequenceEcritureComptable("BQ", 2016);
         SequenceEcritureComptable seq2 = dao.getSequenceEcritureComptable("TT", 1325);
-
-        System.out.println(seq);
-        System.out.println(seq2);
-
         Assert.assertNotNull(seq);
         Assert.assertNull(seq2);
     }
@@ -100,15 +95,48 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     }
 
     @Test
+    public void insertSequenceEcritureComptable() {
+
+        SequenceEcritureComptable seq = new SequenceEcritureComptable();
+        seq.setDerniereValeur(42);
+        seq.setAnnee(2019);
+
+        dao.insertSequenceEcritureComptable(seq, "AC");
+    }
+
+    @Test
+    public void updateSequenceEcritureComptable() throws NotFoundException {
+
+        SequenceEcritureComptable seq = dao.getSequenceEcritureComptable("AC", 2016);
+        seq.setDerniereValeur(22456);
+        dao.updateSequenceEcritureComptable(seq, "AC");
+
+        seq = dao.getSequenceEcritureComptable("AC", 2016);
+        Assert.assertEquals(22456, (int) seq.getDerniereValeur());
+    }
+
+    @Test
     public void updateEcritureComptableTest() throws NotFoundException{
 
-        EcritureComptable ecriture = dao.getEcritureComptableByRef("AC-2016/00001");
-
-        ecriture.setLibelle("TestUpdate");
-
+        EcritureComptable ecriture = dao.getEcritureComptableByRef("TT-2019/00055");
+        ecriture.setLibelle("update");
         dao.updateEcritureComptable(ecriture);
+        Assert.assertEquals("update", dao.getEcritureComptableByRef("TT-2019/00055").getLibelle());
+    }
 
-        Assert.assertEquals("TestUpdate", dao.getEcritureComptableByRef("AC-2016/00001").getLibelle());
+    @Test(expected = NotFoundException.class)
+    public void deleteEcritureComptableTest() throws NotFoundException { // Ca marche bien, mais a tester
+
+        this.setEcriture();
+
+        dao.insertEcritureComptable(vEcritureComptable);
+
+        EcritureComptable ec = dao.getEcritureComptable(7);
+
+        Assert.assertNotNull(ec);
+
+        dao.deleteEcritureComptable(7);
+
     }
 
 }

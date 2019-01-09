@@ -1,7 +1,6 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -143,14 +142,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     // TODO tests à compléter
     protected void checkEcritureComptableUnit(final EcritureComptable pEcritureComptable) throws FunctionalException {
 
-        checkConstrains(pEcritureComptable);
-        checkIsEquilibre(pEcritureComptable);
-        checkNumberLigneEcriture(pEcritureComptable);
-        checkReference(pEcritureComptable);
-
-    }
-
-    public void checkConstrains(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
         if (!vViolations.isEmpty()) {
@@ -159,7 +150,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                             "L'écriture comptable ne respecte pas les contraintes de validation",
                             vViolations));
         }
+
+        checkIsEquilibre(pEcritureComptable); //RG2
+        checkNumberLigneEcriture(pEcritureComptable); //RG3
+        checkReference(pEcritureComptable); //RG5
+
     }
+
 
     public void checkIsEquilibre(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== RG_Compta_2 : Pour qu'une écriture comptable soit valide, elle doit être équilibrée
@@ -197,7 +194,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
         String[] parts = pEcritureComptable.getReference().split("\\p{Punct}");
         String codeJournal = parts[0];
-        String date = parts[2];
+        String date = parts[1];
 
         if(!codeJournal.equals(pEcritureComptable.getJournal().getCode()))
             throw new FunctionalException("Le code journal de la référence est différent du code journal.");
