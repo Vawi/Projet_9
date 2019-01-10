@@ -101,4 +101,11 @@ public interface ComptabiliteDao {
      * @param pId l'id de l'écriture
      */
     void deleteEcritureComptable(Integer pId);
+
+    /**
+     * Supprime une séquence écriture comptable
+     * @param seq la séquence a supprimer
+     * @param journalCode le journal code de la séquence
+     */
+    void deleteSequenceEcritureComptable(SequenceEcritureComptable seq, String journalCode);
 }

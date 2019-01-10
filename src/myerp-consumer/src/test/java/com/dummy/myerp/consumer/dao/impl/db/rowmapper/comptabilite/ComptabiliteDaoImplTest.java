@@ -23,7 +23,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
         Date currentDate = new Date();
         currentYear = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault()).toLocalDate().getYear();
         vEcritureComptable.setJournal(new JournalComptable("OD", "TestInsert"));
-        vEcritureComptable.setReference("TT-" + currentYear + "/00055");
+        vEcritureComptable.setReference("TT-2019/00055");
         vEcritureComptable.setDate(currentDate);
         vEcritureComptable.setLibelle("Test");
 
@@ -67,7 +67,6 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
 
     @Test
     public void getSequenceEcritureComptable() throws NotFoundException {
-
         SequenceEcritureComptable seq = dao.getSequenceEcritureComptable("BQ", 2016);
         SequenceEcritureComptable seq2 = dao.getSequenceEcritureComptable("TT", 1325);
         Assert.assertNotNull(seq);
@@ -84,24 +83,29 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
 
     @Test
     public void insertEcritureComptable() throws NotFoundException {
-
         this.setEcriture();
 
         dao.insertEcritureComptable(vEcritureComptable);
+
         EcritureComptable ecritureBis = dao.getEcritureComptableByRef("TT-" + currentYear + "/00055");
 
+        dao.deleteEcritureComptable(ecritureBis.getId());
         Assert.assertEquals(vEcritureComptable.getReference(), ecritureBis.getReference());
         Assert.assertEquals(vEcritureComptable.getLibelle(), ecritureBis.getLibelle());
     }
 
     @Test
-    public void insertSequenceEcritureComptable() {
-
+    public void insertSequenceEcritureComptable() throws NotFoundException {
         SequenceEcritureComptable seq = new SequenceEcritureComptable();
         seq.setDerniereValeur(42);
         seq.setAnnee(2019);
-
         dao.insertSequenceEcritureComptable(seq, "AC");
+
+        SequenceEcritureComptable seqBis = dao.getSequenceEcritureComptable("AC", 2019);
+
+        Assert.assertEquals(42, (int) seqBis.getDerniereValeur());
+
+        dao.deleteSequenceEcritureComptable(seqBis, "AC");
     }
 
     @Test
@@ -110,7 +114,6 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
         SequenceEcritureComptable seq = dao.getSequenceEcritureComptable("AC", 2016);
         seq.setDerniereValeur(22456);
         dao.updateSequenceEcritureComptable(seq, "AC");
-
         seq = dao.getSequenceEcritureComptable("AC", 2016);
         Assert.assertEquals(22456, (int) seq.getDerniereValeur());
     }
@@ -118,25 +121,36 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     @Test
     public void updateEcritureComptableTest() throws NotFoundException{
 
-        EcritureComptable ecriture = dao.getEcritureComptableByRef("TT-2019/00055");
+        this.setEcriture();
+
+        vEcritureComptable.setReference("UT-2019/00444");
+        dao.insertEcritureComptable(vEcritureComptable);
+        EcritureComptable ecriture = dao.getEcritureComptableByRef("UT-2019/00444");
+        System.out.println(ecriture);
         ecriture.setLibelle("update");
+        System.out.println(ecriture);
         dao.updateEcritureComptable(ecriture);
-        Assert.assertEquals("update", dao.getEcritureComptableByRef("TT-2019/00055").getLibelle());
+        Assert.assertEquals("update", ecriture.getLibelle());
+        dao.deleteEcritureComptable(ecriture.getId());
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void deleteEcritureComptableTest() throws NotFoundException { // Ca marche bien, mais a tester
 
-        this.setEcriture();
+
+
+        Date currentDate = new Date();
+        currentYear = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault()).toLocalDate().getYear();
+        vEcritureComptable.setJournal(new JournalComptable("OD", "TestDel"));
+        vEcritureComptable.setReference("OD-2019/00011");
+        vEcritureComptable.setDate(currentDate);
+        vEcritureComptable.setLibelle("TestDel");
 
         dao.insertEcritureComptable(vEcritureComptable);
 
-        EcritureComptable ec = dao.getEcritureComptable(7);
-
-        Assert.assertNotNull(ec);
-
-        dao.deleteEcritureComptable(7);
-
+        EcritureComptable bis = dao.getEcritureComptableByRef("OD-2019/00011");
+        Assert.assertNotNull(bis);
+        dao.deleteEcritureComptable(bis.getId());
     }
 
 }

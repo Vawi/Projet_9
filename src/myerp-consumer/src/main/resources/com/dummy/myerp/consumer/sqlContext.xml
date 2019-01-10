@@ -100,6 +100,12 @@
                 WHERE ecriture_id = :ecriture_id
             </value>
         </property>
+        <property name="SQLdeleteSequenceEcritureComptable">
+            <value>
+                DELETE FROM myerp.sequence_ecriture_comptable
+                WHERE journal_code = :journal_code AND annee = :annee
+            </value>
+        </property>
     </bean>
 
 </beans>

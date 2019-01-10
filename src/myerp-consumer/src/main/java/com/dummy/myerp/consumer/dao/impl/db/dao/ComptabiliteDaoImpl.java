@@ -63,6 +63,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     /** SQLdeleteListLigneEcritureComptable */
     private static String SQLdeleteListLigneEcritureComptable;
 
+    /** SQLdeleteSequenceEcritureComptable */
+    private static String SQLdeleteSequenceEcritureComptable;
+
     // ==================== Constructeurs ====================
     /** Instance unique de la classe (design pattern Singleton) */
     private static final ComptabiliteDaoImpl INSTANCE = new ComptabiliteDaoImpl();
@@ -140,6 +143,10 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     public void setSQLdeleteListLigneEcritureComptable(final String pSQLdeleteListLigneEcritureComptable) {
         SQLdeleteListLigneEcritureComptable = pSQLdeleteListLigneEcritureComptable;
+    }
+
+    public void setSQLdeleteSequenceEcritureComptable(final String pSQLdeleteSequenceEcritureComptable) {
+        SQLdeleteSequenceEcritureComptable = pSQLdeleteSequenceEcritureComptable;
     }
 
 
@@ -325,6 +332,15 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
         vSqlParams.addValue("id", pId);
         vJdbcTemplate.update(SQLdeleteEcritureComptable, vSqlParams);
+    }
+
+    @Override
+    public void deleteSequenceEcritureComptable(SequenceEcritureComptable seq, String journalCode) {
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("journal_code", journalCode);
+        vSqlParams.addValue("annee", seq.getAnnee());
+        vJdbcTemplate.update(SQLdeleteSequenceEcritureComptable, vSqlParams);
     }
 
     /**

@@ -115,10 +115,23 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
     @Test
     public void addReference() throws NotFoundException {
 
+        StringBuilder valSeq = new StringBuilder();
+        String ref;
+
         this.setEcriture();
         manager.addReference(vEcritureComptable);
         Assert.assertNotNull(vEcritureComptable.getReference());
         Assert.assertEquals("AC-2019/00001", vEcritureComptable.getReference());
+
+        valSeq.append(43);
+        ref = "AC-2019/";
+        while (valSeq.length() != 5) {
+            valSeq.insert(0, '0');
+        }
+        ref = ref.concat(valSeq.toString());
+        vEcritureComptable.setReference(ref);
+
+        Assert.assertEquals("AC-2019/00043", vEcritureComptable.getReference());
     }
 
     @Test
