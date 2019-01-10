@@ -16,7 +16,7 @@ before_script:
 - cd ../../src
 
 script:
-- mvn test -B
+- mvn test -Ptest-consumer,test-business
 - cd ../docker/dev
 - docker-compose stop
 - docker-compose rm -f
