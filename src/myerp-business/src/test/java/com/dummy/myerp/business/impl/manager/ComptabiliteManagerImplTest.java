@@ -28,10 +28,10 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
         vEcritureComptable.setReference("AC-2019/00001");
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(401),
                 null, new BigDecimal(123),
                 null));
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
                 null, null,
                 new BigDecimal(123)));
     }
@@ -45,6 +45,7 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
     @Test(expected = FunctionalException.class)
     public void checkEcritureComptableUnitViolation() throws Exception {
         this.setEcriture();
+        vEcritureComptable.setReference("AC////FFKLsiaofnjoea");
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
@@ -132,6 +133,7 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
         vEcritureComptable.setReference(ref);
 
         Assert.assertEquals("AC-2019/00043", vEcritureComptable.getReference());
+
     }
 
     @Test
@@ -144,15 +146,44 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
                 getDaoProxy().getComptabiliteDao()
                         .getEcritureComptableByRef("AC-2019/00001");
 
-        Assert.assertSame("AC-2019/00001", eb.getReference());
+        Assert.assertEquals("AC-2019/00001", eb.getReference());
+
+        manager.deleteEcritureComptable(eb.getId());
 
     }
 
     @Test
-    public void updateEcritureComptable() {
+    public void updateEcritureComptable() throws Exception {
+
+        this.setEcriture();
+        manager.insertEcritureComptable(vEcritureComptable);
+
+        EcritureComptable eb =
+                getDaoProxy().getComptabiliteDao()
+                        .getEcritureComptableByRef("AC-2019/00001");
+
+        Assert.assertEquals("AC-2019/00001", eb.getReference());
+
+        eb.setReference("AC-2022/00055");
+
+        manager.updateEcritureComptable(eb);
+
+        Assert.assertEquals("AC-2022/00055", eb.getReference());
+
+        manager.deleteEcritureComptable(eb.getId());
     }
 
     @Test
-    public void deleteEcritureComptable() {
+    public void deleteEcritureComptable() throws Exception {
+
+        this.setEcriture();
+        manager.insertEcritureComptable(vEcritureComptable);
+
+        EcritureComptable eb =
+                getDaoProxy().getComptabiliteDao()
+                        .getEcritureComptableByRef("AC-2019/00001");
+
+        manager.deleteEcritureComptable(eb.getId());
+
     }
 }
