@@ -24,7 +24,7 @@ script:
 - cd ../../src
 
 after_success:
-- mvn clean cobertura:cobertura coveralls:report
+- mvn --file pom.xml cobertura:cobertura coveralls:report -P test-consumer,test-business
 
 notifications:
 email: false
