@@ -4,14 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import com.dummy.myerp.testbusiness.business.BusinessTestCase;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 
 import static com.dummy.myerp.consumer.ConsumerHelper.getDaoProxy;
@@ -23,7 +21,8 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
     private EcritureComptable vEcritureComptable = new EcritureComptable();
 
-    public void setEcriture() {
+    @Before
+    public void initEcritureComptable() {
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
@@ -38,20 +37,17 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
     @Test
     public void checkEcritureComptableUnit() throws Exception {
-        this.setEcriture();
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
     @Test(expected = FunctionalException.class)
     public void checkEcritureComptableUnitViolation() throws Exception {
-        this.setEcriture();
         vEcritureComptable.setReference("AC////FFKLsiaofnjoea");
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
     @Test
     public void checkEcritureComptableUnitRG2() throws FunctionalException {
-        this.setEcriture();
         manager.checkIsEquilibre(vEcritureComptable);
     }
 
@@ -62,13 +58,11 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
                 null, new BigDecimal(123),
                 null));
 
-        this.setEcriture();
         manager.checkIsEquilibre(vEcritureComptable);
     }
 
     @Test
     public void checkEcritureComptableUnitRG3() throws Exception {
-        this.setEcriture();
         manager.checkNumberLigneEcriture(vEcritureComptable);
     }
 
@@ -83,14 +77,12 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
     @Test
     public void checkEcritureComptableContext() throws FunctionalException {
-        this.setEcriture();
         vEcritureComptable.setReference("AC-2019/00001");
         manager.checkReference(vEcritureComptable);
     }
 
     @Test(expected = FunctionalException.class)
     public void checkEcritureComptableContextViolation() throws FunctionalException {
-        this.setEcriture();
         vEcritureComptable.setReference("AC-2010/00001");
         manager.checkReference(vEcritureComptable);
     }
@@ -115,15 +107,11 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
     @Test
     public void addReference() throws NotFoundException {
-
         StringBuilder valSeq = new StringBuilder();
         String ref;
-
-        this.setEcriture();
         manager.addReference(vEcritureComptable);
         Assert.assertNotNull(vEcritureComptable.getReference());
         Assert.assertEquals("AC-2019/00001", vEcritureComptable.getReference());
-
         valSeq.append(43);
         ref = "AC-2019/";
         while (valSeq.length() != 5) {
@@ -131,59 +119,79 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
         }
         ref = ref.concat(valSeq.toString());
         vEcritureComptable.setReference(ref);
-
         Assert.assertEquals("AC-2019/00043", vEcritureComptable.getReference());
 
     }
 
     @Test
     public void insertEcritureComptable() throws Exception {
-
-        this.setEcriture();
         manager.insertEcritureComptable(vEcritureComptable);
-
         EcritureComptable eb =
                 getDaoProxy().getComptabiliteDao()
                         .getEcritureComptableByRef("AC-2019/00001");
-
         Assert.assertEquals("AC-2019/00001", eb.getReference());
-
         manager.deleteEcritureComptable(eb.getId());
-
     }
 
     @Test
     public void updateEcritureComptable() throws Exception {
-
-        this.setEcriture();
         manager.insertEcritureComptable(vEcritureComptable);
-
         EcritureComptable eb =
                 getDaoProxy().getComptabiliteDao()
                         .getEcritureComptableByRef("AC-2019/00001");
-
         Assert.assertEquals("AC-2019/00001", eb.getReference());
-
         eb.setReference("AC-2022/00055");
-
         manager.updateEcritureComptable(eb);
-
         Assert.assertEquals("AC-2022/00055", eb.getReference());
-
         manager.deleteEcritureComptable(eb.getId());
     }
 
     @Test
     public void deleteEcritureComptable() throws Exception {
-
-        this.setEcriture();
         manager.insertEcritureComptable(vEcritureComptable);
-
         EcritureComptable eb =
                 getDaoProxy().getComptabiliteDao()
                         .getEcritureComptableByRef("AC-2019/00001");
-
         manager.deleteEcritureComptable(eb.getId());
-
     }
+
+    @Test
+    public void insertSequenceEcritureComptable() throws NotFoundException {
+
+        SequenceEcritureComptable vSeq = new SequenceEcritureComptable();
+        vSeq.setDerniereValeur(32);
+        vSeq.setAnnee(1994);
+
+        manager.insertSequenceEcritureComptable(vSeq, "OD");
+
+        SequenceEcritureComptable seqBis =
+                getDaoProxy().getComptabiliteDao().getSequenceEcritureComptable("OD", 1994);
+
+        Assert.assertEquals(1994, (int) seqBis.getAnnee());
+
+        getDaoProxy().getComptabiliteDao().deleteSequenceEcritureComptable(seqBis, "OD");
+    }
+
+    @Test
+    public void updateSequenceEcritureComptable() throws NotFoundException {
+
+        SequenceEcritureComptable vSeq = new SequenceEcritureComptable();
+        vSeq.setDerniereValeur(32);
+        vSeq.setAnnee(1994);
+
+        manager.insertSequenceEcritureComptable(vSeq, "OD");
+
+        SequenceEcritureComptable seqBis =
+                getDaoProxy().getComptabiliteDao().getSequenceEcritureComptable("OD", 1994);
+
+        seqBis.setDerniereValeur(65);
+
+        manager.updateSequenceEcritureComptable(seqBis, "OD");
+
+        Assert.assertEquals(65, (int) seqBis.getDerniereValeur());
+
+        getDaoProxy().getComptabiliteDao().deleteSequenceEcritureComptable(seqBis, "OD");
+    }
+
+
 }

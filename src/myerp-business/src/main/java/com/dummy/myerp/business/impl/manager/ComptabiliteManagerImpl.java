@@ -98,7 +98,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 ref = ref.concat(valSeq.toString());
                 pEcritureComptable.setReference(ref);
                 seq.setDerniereValeur(seq.getDerniereValeur() + 1);
-                //getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
+                updateSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
             }
         } else {
             seq = new SequenceEcritureComptable();
@@ -106,7 +106,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             seq.setDerniereValeur(1);
             pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + anneeEcriture + "/" + "00001");
             System.out.println(pEcritureComptable);
-            //getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
+            insertSequenceEcritureComptable(seq, pEcritureComptable.getJournal().getCode());
         }
 
         /* 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
@@ -276,6 +276,30 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
         try {
             getDaoProxy().getComptabiliteDao().deleteEcritureComptable(pId);
+            getTransactionManager().commitMyERP(vTS);
+            vTS = null;
+        } finally {
+            getTransactionManager().rollbackMyERP(vTS);
+        }
+    }
+
+    @Override
+    public void insertSequenceEcritureComptable(final SequenceEcritureComptable seq, String code) {
+        TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
+        try {
+            getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(seq, code);
+            getTransactionManager().commitMyERP(vTS);
+            vTS = null;
+        } finally {
+            getTransactionManager().rollbackMyERP(vTS);
+        }
+    }
+
+    @Override
+    public void updateSequenceEcritureComptable(final SequenceEcritureComptable seq, String code) {
+        TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
+        try {
+            getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(seq, code);
             getTransactionManager().commitMyERP(vTS);
             vTS = null;
         } finally {
