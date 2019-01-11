@@ -107,6 +107,8 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
     @Test
     public void addReference() throws NotFoundException {
+        SequenceEcritureComptable seq = new SequenceEcritureComptable();
+        seq.setAnnee(2019);
         StringBuilder valSeq = new StringBuilder();
         String ref;
         manager.addReference(vEcritureComptable);
@@ -120,6 +122,8 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
         ref = ref.concat(valSeq.toString());
         vEcritureComptable.setReference(ref);
         Assert.assertEquals("AC-2019/00043", vEcritureComptable.getReference());
+
+        getDaoProxy().getComptabiliteDao().deleteSequenceEcritureComptable(seq, "AC");
 
     }
 
@@ -157,41 +161,27 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
     @Test
     public void insertSequenceEcritureComptable() throws NotFoundException {
-
         SequenceEcritureComptable vSeq = new SequenceEcritureComptable();
         vSeq.setDerniereValeur(32);
         vSeq.setAnnee(1994);
-
         manager.insertSequenceEcritureComptable(vSeq, "OD");
-
         SequenceEcritureComptable seqBis =
                 getDaoProxy().getComptabiliteDao().getSequenceEcritureComptable("OD", 1994);
-
         Assert.assertEquals(1994, (int) seqBis.getAnnee());
-
         getDaoProxy().getComptabiliteDao().deleteSequenceEcritureComptable(seqBis, "OD");
     }
 
     @Test
     public void updateSequenceEcritureComptable() throws NotFoundException {
-
         SequenceEcritureComptable vSeq = new SequenceEcritureComptable();
         vSeq.setDerniereValeur(32);
         vSeq.setAnnee(1994);
-
         manager.insertSequenceEcritureComptable(vSeq, "OD");
-
         SequenceEcritureComptable seqBis =
                 getDaoProxy().getComptabiliteDao().getSequenceEcritureComptable("OD", 1994);
-
         seqBis.setDerniereValeur(65);
-
         manager.updateSequenceEcritureComptable(seqBis, "OD");
-
         Assert.assertEquals(65, (int) seqBis.getDerniereValeur());
-
         getDaoProxy().getComptabiliteDao().deleteSequenceEcritureComptable(seqBis, "OD");
     }
-
-
 }
