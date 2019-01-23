@@ -106,14 +106,25 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
     }
 
     @Test
-    public void addReference() throws NotFoundException {
+    public void addReferenceSS() throws NotFoundException {
+        SequenceEcritureComptable seq = new SequenceEcritureComptable();
+        seq.setAnnee(2019);
+
+        manager.addReference(vEcritureComptable);
+        Assert.assertNotNull(vEcritureComptable.getReference());
+        Assert.assertEquals("AC-2019/00001", vEcritureComptable.getReference());
+
+        getDaoProxy().getComptabiliteDao().deleteSequenceEcritureComptable(seq, "AC");
+
+    }
+
+    @Test
+    public void addReferenceAS() {
         SequenceEcritureComptable seq = new SequenceEcritureComptable();
         seq.setAnnee(2019);
         StringBuilder valSeq = new StringBuilder();
         String ref;
-        manager.addReference(vEcritureComptable);
-        Assert.assertNotNull(vEcritureComptable.getReference());
-        Assert.assertEquals("AC-2019/00001", vEcritureComptable.getReference());
+
         valSeq.append(43);
         ref = "AC-2019/";
         while (valSeq.length() != 5) {
@@ -122,8 +133,6 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
         ref = ref.concat(valSeq.toString());
         vEcritureComptable.setReference(ref);
         Assert.assertEquals("AC-2019/00043", vEcritureComptable.getReference());
-
-        getDaoProxy().getComptabiliteDao().deleteSequenceEcritureComptable(seq, "AC");
 
     }
 

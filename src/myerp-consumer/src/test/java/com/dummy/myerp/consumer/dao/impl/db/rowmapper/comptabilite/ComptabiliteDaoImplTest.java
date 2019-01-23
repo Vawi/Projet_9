@@ -5,6 +5,7 @@ import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import com.dummy.myerp.testconsumer.consumer.ConsumerTestCase;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -19,7 +20,8 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     private EcritureComptable vEcritureComptable = new EcritureComptable();
     private int currentYear = 0;
 
-    private void setEcriture() {
+    @Before
+    public void initEcritureComptable() {
         Date currentDate = new Date();
         currentYear = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault()).toLocalDate().getYear();
         vEcritureComptable.setJournal(new JournalComptable("OD", "TestInsert"));
@@ -54,7 +56,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     }
 
     @Test
-    public void getEcritureComptable() throws NotFoundException { // Id négatif a corriger ?
+    public void getEcritureComptable() throws NotFoundException {
         EcritureComptable ec = dao.getEcritureComptable(-2);
         Assert.assertNotNull(ec);
     }
@@ -83,7 +85,6 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
 
     @Test
     public void insertEcritureComptable() throws NotFoundException {
-        this.setEcriture();
 
         dao.insertEcritureComptable(vEcritureComptable);
 
@@ -121,23 +122,17 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase {
     @Test
     public void updateEcritureComptableTest() throws NotFoundException{
 
-        this.setEcriture();
-
         vEcritureComptable.setReference("UT-2019/00444");
         dao.insertEcritureComptable(vEcritureComptable);
         EcritureComptable ecriture = dao.getEcritureComptableByRef("UT-2019/00444");
-        System.out.println(ecriture);
         ecriture.setLibelle("update");
-        System.out.println(ecriture);
         dao.updateEcritureComptable(ecriture);
         Assert.assertEquals("update", ecriture.getLibelle());
         dao.deleteEcritureComptable(ecriture.getId());
     }
 
     @Test
-    public void deleteEcritureComptableTest() throws NotFoundException { // Ca marche bien, mais a tester
-
-
+    public void deleteEcritureComptableTest() throws NotFoundException {
 
         Date currentDate = new Date();
         currentYear = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault()).toLocalDate().getYear();

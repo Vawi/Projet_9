@@ -57,8 +57,6 @@ public class EcritureComptableTest {
                 vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
             }
         }
-        System.out.println("Total : " + vEcriture.getTotalDebit());
-        System.out.println("VRetour : " + vRetour);
         Assert.assertEquals(vEcriture.getTotalDebit(), vRetour);
     }
 
@@ -79,8 +77,6 @@ public class EcritureComptableTest {
                 vRetour = vRetour.add(vLigneEcritureComptable.getCredit());
             }
         }
-        System.out.println("Total : " + vEcriture.getTotalCredit());
-        System.out.println("VRetour : " + vRetour);
         Assert.assertEquals(vEcriture.getTotalCredit(), vRetour);
     }
 }
