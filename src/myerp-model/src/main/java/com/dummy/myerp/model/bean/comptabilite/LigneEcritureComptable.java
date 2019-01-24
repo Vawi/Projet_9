@@ -84,14 +84,12 @@ public class LigneEcritureComptable {
     // ==================== Méthodes ====================
     @Override
     public String toString() {
-        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
         final String vSEP = ", ";
-        vStB.append("{")
-            .append("compteComptable=").append(compteComptable)
-            .append(vSEP).append("libelle='").append(libelle).append('\'')
-            .append(vSEP).append("debit=").append(debit)
-            .append(vSEP).append("credit=").append(credit)
-            .append("}");
-        return vStB.toString();
+        return this.getClass().getSimpleName() + "{" +
+                "compteComptable=" + compteComptable +
+                vSEP + "libelle='" + libelle + '\'' +
+                vSEP + "debit=" + debit +
+                vSEP + "credit=" + credit +
+                "}";
     }
 }

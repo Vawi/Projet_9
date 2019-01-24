@@ -68,13 +68,11 @@ public class CompteComptable {
     // ==================== Méthodes ====================
     @Override
     public String toString() {
-        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
         final String vSEP = ", ";
-        vStB.append("{")
-            .append("numero=").append(numero)
-            .append(vSEP).append("libelle='").append(libelle).append('\'')
-            .append("}");
-        return vStB.toString();
+        return this.getClass().getSimpleName() + "{" +
+                "numero=" + numero +
+                vSEP + "libelle='" + libelle + '\'' +
+                "}";
     }
 
 

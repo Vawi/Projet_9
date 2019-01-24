@@ -60,13 +60,11 @@ public class JournalComptable {
     // ==================== Méthodes ====================
     @Override
     public String toString() {
-        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
         final String vSEP = ", ";
-        vStB.append("{")
-            .append("code='").append(code).append('\'')
-            .append(vSEP).append("libelle='").append(libelle).append('\'')
-            .append("}");
-        return vStB.toString();
+        return this.getClass().getSimpleName() + "{" +
+                "code='" + code + '\'' +
+                vSEP + "libelle='" + libelle + '\'' +
+                "}";
     }
 
 
