@@ -67,10 +67,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * <p><strong>Attention :</strong> l'écriture n'est pas enregistrée en persistance</p>
      * @param pEcritureComptable L'écriture comptable concernée
      */
-    // TODO à tester
     @Override
     public synchronized void addReference(final EcritureComptable pEcritureComptable) throws NotFoundException {
-        // TODO à implémenter
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
@@ -124,7 +122,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
     @Override
     public void checkEcritureComptable(final EcritureComptable pEcritureComptable) throws FunctionalException {
         this.checkEcritureComptableUnit(pEcritureComptable);
@@ -139,7 +136,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    // TODO tests à compléter
     protected void checkEcritureComptableUnit(final EcritureComptable pEcritureComptable) throws FunctionalException {
 
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
@@ -190,6 +186,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         }
     }
 
+    /**
+     * Virifie le contenu et le format de la référence
+     * @param pEcritureComptable l'écritire dont il faut vérifier la référence
+     * @throws FunctionalException en cas de référence invalide
+     */
     public void checkReference(EcritureComptable pEcritureComptable) throws FunctionalException {
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
