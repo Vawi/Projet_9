@@ -8,6 +8,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/Vawi/Projet_9/badge.svg?branch=master)](https://coveralls.io/github/Vawi/Projet_9?branch=master)
 
+[![CodeFactor](https://www.codefactor.io/repository/github/vawi/projet_9/badge)](https://www.codefactor.io/repository/github/vawi/projet_9)
+
 ## Organisation du répertoire
 
 *   `doc` : documentation
